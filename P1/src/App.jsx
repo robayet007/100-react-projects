@@ -1,20 +1,22 @@
-import React from 'react'
-
+import { useState , useEffect } from "react"
 const App = () => {
-  const userInfo = [
-    {id:1 , name : "robayet"  , rollNum : 5},
-    {id:2 , name : "huxen"  , rollNum : 6},
-    {id:3 , name : "huxen"  , rollNum : 7},
-]
+  const [name , setName] = useState(() =>{
+    const saveNmae = localStorage.getItem("name")
+    return  saveNmae ? JSON.parse(saveNmae) : "";
+  })
+useEffect(() =>{
+  localStorage.setItem("name" , JSON.stringify(name))
+}, [name])
+
+const handleChange = (e) => {
+  setName(e.target.value)
+}
+
   return (
     <div>
-      {userInfo.map((users)=>
-        <ul key={users.id}>
-          <li>{users.id}</li>
-          <li>{users.name}</li>
-          <li>{users.rollNum}</li>
-        </ul>
-      )}
+      <h1>name : {name}</h1>
+      <input type="text" value={name} onChange={handleChange} />
+      <button onClick={() => setName("")}>clear</button>
     </div>
   )
 }
