@@ -1,22 +1,16 @@
-import { useState , useEffect } from "react"
+import React from 'react'
+import { useState , useEffect } from 'react'
+
 const App = () => {
-  const [name , setName] = useState(() =>{
-    const saveNmae = localStorage.getItem("name")
-    return  saveNmae ? JSON.parse(saveNmae) : "";
-  })
-useEffect(() =>{
-  localStorage.setItem("name" , JSON.stringify(name))
-}, [name])
-
-const handleChange = (e) => {
-  setName(e.target.value)
-}
-
+  const [count , setCount] = useState(0)
+  useEffect(()=>{
+       console.log('use effect')
+       document.title = `counter ${count}`
+  },[count])
   return (
     <div>
-      <h1>name : {name}</h1>
-      <input type="text" value={name} onChange={handleChange} />
-      <button onClick={() => setName("")}>clear</button>
+      <h1>{count}</h1>
+      <button onClick={()=>setCount(count + 1)}>Click</button>
     </div>
   )
 }
